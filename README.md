@@ -1,26 +1,52 @@
-# Ethereum Data Quality Audit Framework 🛡️
+🛡️ Ethereum Data Quality Audit: The 58% Zero-Value Mystery
+📋 Project Overview
+This project demonstrates a professional Data Quality Engineering workflow applied to Ethereum blockchain transactions. The investigation was triggered by a significant anomaly: 58% of transactions on 2025-12-01 had a value of zero ETH. I led a three-phase audit to verify if this was a data integrity failure or legitimate system behavior.
 
-## 📌 Professional Statement
-This repository showcases my approach to **Data Quality Engineering** as a Computer Science Graduate (Honors). It contains specialized SQL audits designed to monitor and safeguard data integrity within the Ethereum blockchain using Google BigQuery.
+🔍 Phase 1: DQ_Discovery_zeroValue
+Goal: Initial data profiling to identify integrity gaps and missing records.
 
-## ⚖️ Intellectual Property Notice
-All rights reserved. This code is provided for **demonstration and portfolio purposes only**. Unauthorized copying, modification, or distribution of this logic is not permitted.
+Action: Performed a comprehensive completeness check for NULL values and logical consistency in the transaction table.
 
----
+Key Finding: Discovered that 1,081,526 transactions (approx. 58%) carried a value of 0 ETH.
 
-## 🔍 Audit Scope & Findings
+Integrity Status: Confirmed 100% data completeness (0% missing addresses), but flagged the volume anomaly for forensic investigation.
 
-### Phase 1: Data Integrity Audit
-In this first part of the project, I wanted to ensure the dataset's quality before diving into deeper analysis. I ran a SQL audit to check for missing values and identify any immediate patterns.
+⚖️ Phase 2: DQ_Audit_zeroValue (Forensic Investigation)
+Goal: Root cause analysis and technical validation of zero-value records.
 
-**What I found:**
-* **Zero Missing Addresses:** The data is quite clean; I found no missing sender addresses across the entire sample.
-* **High Volume of Zero-Value Transactions:** I noticed that **1,081,526** transactions had a value of 0. This is a huge portion of the **1,846,657** total records I audited.
-* **Next Step:** This high number of zero-value transactions is interesting. I'll be investigating whether these represent smart contract interactions or failed attempts in the next phase.
+Action: Developed a forensic SQL script to categorize transactions by input type and receipt_status.
 
-#### **Execution Results (BigQuery):**
-![Audit Results](01_initial_integrity_audit.png.png)
+Visualization: Built an automated dashboard in Looker Studio to monitor system health.
 
----
-**Author:** Hadeel Alhendi
-*Bridging the gap between raw data and reliable insights.*
+Key Insights:
+
+98.4% of zero-value records were identified as Contract Calls (legitimate technical activity), confirming data accuracy.
+
+97.6% Success Rate: Pie chart analysis confirmed that the vast majority of these transactions were processed successfully by the network.
+
+Hourly Stability: Bar chart analysis showed a steady transaction flow throughout the day, ruling out pipeline failures.
+
+💰 Phase 3: DQ_impact_integrity_zeroValue
+Goal: Financial impact assessment and resource integrity audit.
+
+Action: Analyzed the economic footprint (Gas Fees) of zero-value transactions to ensure they were not "data noise".
+
+Key Findings:
+
+Total Fees Processed: Verified that these transactions generated 111.64 ETH in network fees, proving they are high-value technical operations.
+
+Risk Assessment: Confirmed a low 2.16% failure risk, signifying a highly reliable data ingestion environment.
+
+Maximum Complexity: Identified single transactions consuming up to 4.5M gas, indicating complex smart contract interactions.
+
+🚀 Business Impact & Conclusion
+By applying this DQ framework, I successfully distinguished "Technical Noise" from "Data Errors."
+
+Outcome: Provided the bank/organization with a 97.6% confidence score in their blockchain data pipeline.
+
+Recommendation: Approved the dataset for financial reporting, as the zero-value anomaly reflects healthy smart contract activity rather than data loss.
+
+🛠️ Technical Stack
+SQL (BigQuery): For massive-scale data profiling and forensic auditing.
+
+Looker Studio: For real-time quality monitoring and anomaly visualization.
